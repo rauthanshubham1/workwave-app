@@ -1,0 +1,27 @@
+.container {
+  /* border: 2px solid black; */
+  height: 765px;
+  width: 100%;
+  display: flex;
+  justify-items: flex-end;
+}
+
+.sub-container-1 {
+  height: 100%;
+  width: 18%;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  /* border: 2px solid red; */
+}
+
+.sub-container-2 {
+  height: 100%;
+  width: 82%;
+  /* border: 2px solid red; */
+  background-color: #ffffff;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+
+
+/* DarkMode css */

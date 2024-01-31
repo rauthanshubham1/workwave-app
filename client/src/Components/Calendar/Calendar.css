@@ -1,0 +1,75 @@
+/* LightMode css */
+.parentCalendarContainer {
+  /* border: 2px solid red; */
+  height: 100%;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+
+.eventsOnDate {
+  /* border: 2px solid black; */
+  /* height: 60%; */
+  padding: 0px;
+  text-align: center;
+}
+
+.eventsList {
+  margin: 0 auto;
+  border: 2px dotted grey;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  padding: 0px;
+  list-style: lower-roman;
+  font-weight: 500;
+  font-family: serif;
+  font-size: large;
+}
+
+.eventsList li {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+/* DarkMode css */
+.parentCalendarContainer-darkMode {
+  /* border: 2px solid red; */
+  height: 100%;
+  background-color: #393c3d;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+
+.eventsOnDate-darkMode {
+  padding: 0px;
+  text-align: center;
+  color: white;
+}
+
+.eventsList-darkMode {
+  margin: 0 auto;
+  border: 2px dotted white;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  padding: 0px;
+  list-style: lower-roman;
+  font-weight: 500;
+  font-family: serif;
+  font-size: large;
+}
+
+.eventsList-darkMode-withFilter {
+  filter: blur(3px);
+}
+
+.eventsList-darkMode li {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}

@@ -1,0 +1,30 @@
+/* LightMode css */
+.calenderLayoutContainer {
+  /* border: 2px solid red; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 47%;
+}
+
+.reactCalender {
+  border: 2px solid black;
+  width: 50%;
+  background-color: #e3e4e4c0;
+  font-weight: 700;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/* DarkMode css */
+.reactCalender-darkMode {
+  border: 2px solid white;
+  width: 50%;
+  background-color: #72787edb;
+  color: white ;
+  font-weight: 700;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.calenderTile-darkMode{
+  color: white;
+}
