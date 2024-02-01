@@ -14,6 +14,7 @@ import Settings from './Components/Settings/Settings';
 import DarkModeContext from './Contexts/DarkMode/DarkModeContext';
 import Logout from './Pages/Logout/Logout';
 import AssignTasks from './Components/AssignTasks/AssignTasks';
+import ErrorPage from './Pages/ErrorPage/ErrorPage';
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -41,6 +42,7 @@ function renderAppComponent(darkMode) {
             <Route path="settings" element={<Settings />} ></Route>
           </Route>
           <Route exact path="/logout" element={<Logout />} />
+          <Route exact path="/*" element={<ErrorPage />} />
         </Routes >
       </div >
     )
@@ -53,18 +55,15 @@ function renderAppComponent(darkMode) {
           <Route exact path="/" element={<MainPage />} >
             <Route index element={<Dashboard />} ></Route>
             <Route path="yourprofile" element={<YourProfile />} ></Route>
-
             <Route path="todolist" element={<ToDoList />} ></Route>
             <Route path="assigntasks" element={<AssignTasks />} ></Route>
-
             <Route path="team" element={<Team />} ></Route>
-
             <Route path="premium" element={<Premium />} ></Route>
             <Route path="calendar" element={<Calendar />} ></Route>
-
             <Route path="settings" element={<Settings />} ></Route>
           </Route>
           <Route exact path="/logout" element={<Logout />} />
+          <Route exact path="/*" element={<ErrorPage />} />
         </Routes >
       </div >
     )
