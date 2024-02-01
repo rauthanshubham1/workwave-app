@@ -255,7 +255,7 @@ router.patch("/updateTodayTasks", authentication, async (req, res) => {
 
         const enterprise = await Enterprise.findOne({ "teams.email": userData.email, "tasksAssigned.employeeEmail": userData.email });
         await enterprise.updateTodayTasks(todayDate, updatedTasksArr, userData.email);
-        
+
         res.status(200).json({ "message": "Task Updated" });
     } catch (err) {
         console.log(err)
@@ -292,7 +292,6 @@ router.post('/completeOrder/:email', async (req, res) => {
     const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = req.body;
     const { email } = req.params;
     const generated_signature = hmac_sha256(razorpay_order_id + "|" + razorpay_payment_id, process.env.RAZORPAY_API_SECRET);
-
     if (generated_signature === razorpay_signature) {
         const enterprise = await Enterprise.findOne({ email });
         if (enterprise) {
@@ -302,7 +301,7 @@ router.post('/completeOrder/:email', async (req, res) => {
                 const employee = await Employee.findOne({ email: emp.email });
                 await employee.purchasedPremium();
             })
-            res.redirect("http://localhost:3002");
+            res.redirect(process.env.FRONTEND);
         } else {
             res.status(400).json({ success: false });
         }

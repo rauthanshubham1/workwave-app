@@ -5,7 +5,10 @@ import Events from './Components/Events'
 import "./Calendar.css"
 import DarkModeContext from '../../Contexts/DarkMode/DarkModeContext'
 import UserDataContext from '../../Contexts/UserData/UserDataContext'
+import LoadingBar from 'react-top-loading-bar'
+
 const Calendar = () => {
+    const [progress, setProgress] = useState(0);
     const { darkMode } = useContext(DarkModeContext);
     const { state } = useContext(UserDataContext);
 
@@ -14,10 +17,13 @@ const Calendar = () => {
     const [value, setChangeDate] = useState(new Date());
 
     useEffect(() => {
+        setProgress(70);
         setIsPremium(state.userData.isPremium);
+        setProgress(100);
     }, [])
 
     useEffect(() => {
+        setProgress(70);
         const date = getFormattedDate(value);
         setTasksOnDate([]);
         const allTask = state.userData.tasks;
@@ -27,6 +33,7 @@ const Calendar = () => {
                 setTasksOnDate(taskObj.task);
             }
         }
+        setProgress(100);
     }, [value])
 
 
@@ -47,6 +54,8 @@ const Calendar = () => {
                     ?
                     (
                         <div className='parentCalendarContainer-darkMode' >
+                            <LoadingBar color={"red"} progress={progress}
+                                onLoaderFinished={() => setProgress(0)} />
                             <Header darkMode={darkMode} heading="Calendar" />
                             <CalendarLayout
                                 darkMode={darkMode}
@@ -78,6 +87,8 @@ const Calendar = () => {
                     :
                     (
                         <div className='parentCalendarContainer' >
+                            <LoadingBar color={"red"} progress={progress}
+                                onLoaderFinished={() => setProgress(0)} />
                             <Header heading="Calendar" />
                             <CalendarLayout
                                 value={value}

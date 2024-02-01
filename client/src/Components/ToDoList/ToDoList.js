@@ -5,8 +5,10 @@ import "./ToDoList.css"
 import Task from './Task/Task'
 import DarkModeContext from '../../Contexts/DarkMode/DarkModeContext'
 import UserDataContext from '../../Contexts/UserData/UserDataContext'
+import LoadingBar from 'react-top-loading-bar'
 
 const ToDoList = () => {
+    const [progress, setProgress] = useState(0);
     const { darkMode } = useContext(DarkModeContext);
     const { state, dispatch } = useContext(UserDataContext);
 
@@ -65,14 +67,18 @@ const ToDoList = () => {
     }
 
     useEffect(() => {
+        setProgress(70);
         const date = todayDate();
         setTodaysTasks(date);
         setIsPremium(state.userData.isPremium);
+        setProgress(100);
     }, [])
 
     return (
         darkMode ?
             <div className='parentToDoContainer-darkMode'>
+                <LoadingBar color={"red"} progress={progress}
+                    onLoaderFinished={() => setProgress(0)} />
                 <Header darkMode={darkMode} heading="ToDoList"></Header>
                 <div className='todoContainer-darkMode'>
                     <div className='todoContainer1-darkMode'>
@@ -98,6 +104,8 @@ const ToDoList = () => {
             :
 
             <div className='parentToDoContainer'>
+                <LoadingBar color={"red"} progress={progress}
+                    onLoaderFinished={() => setProgress(0)} />
                 <Header darkMode={darkMode} heading="ToDoList"></Header>
                 <div className='todoContainer'>
                     <div className='todoContainer1'>

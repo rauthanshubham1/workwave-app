@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from "axios"
 import "./Login.css"
 import { Link, useNavigate } from 'react-router-dom';
 import jscookie from "js-cookie"
-
+import LoadingBar from 'react-top-loading-bar'
 
 const Login = () => {
   const navigate = useNavigate();
+  const [progress, setProgress] = useState(0);
   const [btnLabel, setBtnLabel] = useState(1);  // true for employee
   const [employeeLoginDetails, setEmployeeLoginDetails] = useState({ employeeEmailLogin: "", employeePasswordLogin: "" });
   const [enterpriseLoginDetails, setEnterpriseLoginDetails] = useState({ enterpriseEmailLogin: "", enterprisePasswordLogin: "" });
@@ -44,6 +45,7 @@ const Login = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    setProgress(70);
     if (btnLabel) {
       //  For employee
       try {
@@ -56,8 +58,11 @@ const Login = () => {
           console.log("Login successful");
           navigate("/");
         }
+        setProgress(100);
       } catch (err) {
-        console.log(err)
+        setProgress(100);
+        console.log(err);
+        alert("Invalid Credentials");
       }
     } else {
       //  For enterprise
@@ -71,8 +76,11 @@ const Login = () => {
           console.log("Login successful");
           navigate("/");
         }
+        setProgress(100);
       } catch (err) {
-        console.log(err)
+        setProgress(100);
+        console.log(err);
+        alert("Invalid Credentials");
       }
     }
   }
@@ -80,6 +88,8 @@ const Login = () => {
 
   return (
     <div className='loginContainer' >
+      <LoadingBar color={"red"} progress={progress}
+        onLoaderFinished={() => setProgress(0)} />
       <div className='loginContainerChild'>
         <div className='pageName'>Login</div>
 

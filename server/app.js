@@ -11,7 +11,7 @@ const corsOptions = {
 }
 app.use(cors(corsOptions));
 app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));        
+app.use(express.urlencoded({ extended: true }));
 const PORT = process.env.PORT || 8000;
 
 app.use(require("./router/routes"));

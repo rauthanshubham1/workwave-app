@@ -7,14 +7,17 @@ import BarGraph from './BarGraph/BarGraph'
 import PieGraph from './PieGraph/PieGraph'
 import RadarGraph from './RadarGraph/RadarGraph'
 import "./Dashboard.css"
+import LoadingBar from 'react-top-loading-bar'
 
 const Dashboard = () => {
+    const [progress, setProgress] = useState(0);
     const { darkMode } = useContext(DarkModeContext);
     const { state } = useContext(UserDataContext);
     const [isPremium, setIsPremium] = useState(false);
 
     useEffect(() => {
         setIsPremium(state.userData.isPremium);
+        setProgress(100);
     }, [])
 
 
@@ -22,6 +25,8 @@ const Dashboard = () => {
         darkMode
             ?
             <div className='parentDashboardContainer-darkMode'>
+                <LoadingBar color={"red"} progress={progress}
+                    onLoaderFinished={() => setProgress(0)} />
                 <Header darkMode={darkMode} heading="Dashboard" />
                 <div className='dashboardContainer'>
                     <div className='dashboardContainer1'>
@@ -44,6 +49,8 @@ const Dashboard = () => {
             :
 
             <div className='parentDashboardContainer'>
+                <LoadingBar color={"red"} progress={progress}
+                    onLoaderFinished={() => setProgress(0)} />
                 <Header darkMode={darkMode} heading="Dashboard" />
                 <div className='dashboardContainer'>
                     <div className='dashboardContainer1'>

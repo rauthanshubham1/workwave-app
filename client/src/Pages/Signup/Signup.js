@@ -2,8 +2,11 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import "./Signup.css"
 import { Link, useNavigate } from 'react-router-dom';
+import LoadingBar from 'react-top-loading-bar'
+
 const Signup = () => {
     const navigate = useNavigate()
+    const [progress, setProgress] = useState(0);
     const [btnLabel, setBtnLabel] = useState(1);  // true for employee
     const [employeeSignupDetails, setEmployeeSignupDetails] =
         useState(
@@ -36,9 +39,9 @@ const Signup = () => {
         }
     }
 
-
     const handleFormSubmit = async (e) => {
         e.preventDefault();
+        setProgress(70);
         if (btnLabel) {
             //  For employee
             try {
@@ -52,8 +55,11 @@ const Signup = () => {
                     navigate("/login");
                     console.log("Signup successful");
                 }
+                setProgress(100);
             } catch (err) {
+                setProgress(100);
                 console.log(err)
+                alert("Invalid Credentials");
             }
         } else {
             //  For enterprise
@@ -68,8 +74,11 @@ const Signup = () => {
                     navigate("/login");
                     console.log("Signup successful");
                 }
+                setProgress(100);
             } catch (err) {
-                console.log(err)
+                setProgress(100);
+                console.log(err);
+                alert("Invalid Credentials");
             }
         }
     }
@@ -79,6 +88,8 @@ const Signup = () => {
 
     return (
         <div className='signupContainer' >
+            <LoadingBar color={"red"} progress={progress}
+                onLoaderFinished={() => setProgress(0)} />
             <div className='signupContainerChild'>
                 <div className='pageName'>SignUp</div>
 

@@ -1,10 +1,13 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import axios from "axios"
 import UserDataContext from "../../Contexts/UserData/UserDataContext"
 import { useNavigate } from 'react-router-dom';
+import LoadingBar from 'react-top-loading-bar'
+
 const Logout = () => {
     const navigate = useNavigate()
-    const { state, dispatch } = useContext(UserDataContext);
+    const [progress, setProgress] = useState(0);
+    const { dispatch } = useContext(UserDataContext);
 
     const handleLogout = async () => {
         try {
@@ -20,11 +23,16 @@ const Logout = () => {
         }
     };
     useEffect(() => {
+        setProgress(70);
         handleLogout();
+        setProgress(100);
     }, [])
 
     return (
-        <div></div>
+        <div>
+            <LoadingBar color={"red"} progress={progress}
+                onLoaderFinished={() => setProgress(0)} />
+        </div>
     )
 }
 

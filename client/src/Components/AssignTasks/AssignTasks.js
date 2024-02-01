@@ -5,8 +5,10 @@ import DarkModeContext from '../../Contexts/DarkMode/DarkModeContext'
 import UserDataContext from '../../Contexts/UserData/UserDataContext'
 import "./AssignTasks.css"
 import ListItem from './ListItem/ListItem'
+import LoadingBar from 'react-top-loading-bar'
 
 const AssignTasks = () => {
+    const [progress, setProgress] = useState(0);
     const { darkMode } = useContext(DarkModeContext);
     const { state } = useContext(UserDataContext);
     const [searchUser, setSearchUser] = useState("");
@@ -19,7 +21,9 @@ const AssignTasks = () => {
     const [selectDate, setSelectDate] = useState("");
 
     useEffect(() => {
+        setProgress(70);
         setAllTeamMembers(state.userData.teams);
+        setProgress(100);
     }, [])
 
 
@@ -35,8 +39,10 @@ const AssignTasks = () => {
     }
 
     const handleAddTaskButton = async () => {
+        setProgress(70);
         try {
             if (inputTask === "" || selectedTeamMember.name === "") {
+                setProgress(100);
                 alert("Please fill the task");
             } else {
                 if (seletedTeamMemberTasks[0] === undefined) {
@@ -50,6 +56,7 @@ const AssignTasks = () => {
                     setSelectedTeamMemberTasks(newArray);
                     // add to db
                     const response = await axios.post(`${process.env.REACT_APP_BACKEND}/assignTask`, { taskDetails: newArray }, { withCredentials: true });
+                    setProgress(100);
                     if (response.status === 200) {
                         alert("Task Assigned Successfully");
                     }
@@ -63,6 +70,7 @@ const AssignTasks = () => {
                         }
                     ]
                     setSelectedTeamMemberTasks(newArray);
+                    setProgress(100);
                     const response = await axios.post(`${process.env.REACT_APP_BACKEND}/assignTask`, { taskDetails: newArray }, { withCredentials: true });
                     if (response.status === 200) {
                         alert("Task Assigned");
@@ -71,39 +79,55 @@ const AssignTasks = () => {
                 setInputTask("");
             }
         } catch (err) {
-            console.log(err)
+            setProgress(100);
+            console.log(err);
         }
     }
 
     const deleteTask = async (index) => {
-        seletedTeamMemberTasks[0].tasks.splice(index, 1)
-        const modifiedArr = [
-            {
-                employeeEmail: selectedTeamMember.email,
-                taskDate: selectDate,
-                tasks: [...(seletedTeamMemberTasks[0].tasks)]
+        setProgress(70);
+        try {
+            seletedTeamMemberTasks[0].tasks.splice(index, 1)
+            const modifiedArr = [
+                {
+                    employeeEmail: selectedTeamMember.email,
+                    taskDate: selectDate,
+                    tasks: [...(seletedTeamMemberTasks[0].tasks)]
+                }
+            ]
+            setSelectedTeamMemberTasks(modifiedArr);
+
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND}/deleteTask`, { taskDetails: modifiedArr }, { withCredentials: true });
+            setProgress(100);
+            if (response.status === 200) {
+                alert("Task Deleted Successfully");
             }
-        ]
-        setSelectedTeamMemberTasks(modifiedArr);
-
-        const response = await axios.post(`${process.env.REACT_APP_BACKEND}/deleteTask`, { taskDetails: modifiedArr }, { withCredentials: true });
-
-        if (response.status === 200) {
-            alert("Task Deleted Successfully");
+        } catch (err) {
+            setProgress(100);
+            console.log(err)
         }
+
     }
 
     const handleShowAllTasks = async () => {
-        if (selectedTeamMember.name === "" || selectedTeamMember.email === "" || selectDate === "") {
-            alert("Please select the required details of the person see tasks");
-        } else {
-            const response = await axios.get(`${process.env.REACT_APP_BACKEND}/getTask?employeeEmail=${selectedTeamMember.email}&taskDate=${selectDate}`, { withCredentials: true });
-            const data = response.data.message;
-            if (data[0] === undefined) {
-                setSelectedTeamMemberTasks([]);
+        setProgress(70);
+        try {
+            if (selectedTeamMember.name === "" || selectedTeamMember.email === "" || selectDate === "") {
+                setProgress(100);
+                alert("Please select the required details of the person see tasks");
             } else {
-                setSelectedTeamMemberTasks(data);
+                const response = await axios.get(`${process.env.REACT_APP_BACKEND}/getTask?employeeEmail=${selectedTeamMember.email}&taskDate=${selectDate}`, { withCredentials: true });
+                setProgress(100);
+                const data = response.data.message;
+                if (data[0] === undefined) {
+                    setSelectedTeamMemberTasks([]);
+                } else {
+                    setSelectedTeamMemberTasks(data);
+                }
             }
+        } catch (err) {
+            setProgress(100);
+            console.log(err)
         }
     }
 
@@ -120,14 +144,23 @@ const AssignTasks = () => {
     }
 
     const handleSearchUserButton = async () => {
-        if (searchUser !== "") {
-            const response = await axios.post(`${process.env.REACT_APP_BACKEND}/addTeamMember`, { searchUser }, { withCredentials: true });
-            if (response.status === 200) {
-                alert("Team Member successfully added");
+        try {
+            setProgress(70);
+            if (searchUser !== "") {
+                const response = await axios.post(`${process.env.REACT_APP_BACKEND}/addTeamMember`, { searchUser }, { withCredentials: true });
+                setProgress(100);
+                if (response.status === 200) {
+                    alert("Team Member successfully added");
+                } else {
+                    alert("Error occurred");
+                }
             } else {
-                alert("Error occurred");
+                setProgress(100);
+                alert("Enter a valid email address");
             }
-        } else {
+        } catch (err) {
+            setProgress(100);
+            console.log(err)
             alert("Enter a valid email address");
         }
     }
@@ -141,6 +174,8 @@ const AssignTasks = () => {
             ?
             (
                 < div className='parentAssignTasksContainer-darkMode' >
+                    <LoadingBar color={"red"} progress={progress}
+                        onLoaderFinished={() => setProgress(0)} />
                     <Header darkMode={darkMode} heading="Assign Tasks"></Header >
                     <div className='assignTasksContainer'>
 
@@ -230,6 +265,8 @@ const AssignTasks = () => {
 
             (
                 < div className='parentAssignTasksContainer' >
+                    <LoadingBar color={"red"} progress={progress}
+                        onLoaderFinished={() => setProgress(0)} />
                     <Header darkMode={darkMode} heading="Assign Tasks"></Header >
                     <div className='assignTasksContainer'>
 

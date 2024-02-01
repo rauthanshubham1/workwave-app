@@ -4,20 +4,24 @@ import DarkModeContext from '../../Contexts/DarkMode/DarkModeContext'
 import UserDataContext from "../../Contexts/UserData/UserDataContext"
 import "./Premium.css"
 import axios from 'axios'
-
+import LoadingBar from 'react-top-loading-bar'
 
 const Premium = () => {
+    const [progress, setProgress] = useState(0);
     const { darkMode } = useContext(DarkModeContext);
     const { state } = useContext(UserDataContext);
     const [isPremium, setIsPremium] = useState(false);
 
     useEffect(() => {
+        setProgress(70);
         setIsPremium(state.userData.isPremium);
+        setProgress(100);
     }, [])
 
 
     const handleProceedPayment = async () => {
         try {
+            setProgress(70);
             const res = await axios.get(`${process.env.REACT_APP_BACKEND}/razorpay-key`);
             const key = res.data.key;
 
@@ -50,7 +54,9 @@ const Premium = () => {
                 razor.open();
 
             }
+            setProgress(100);
         } catch (err) {
+            setProgress(100);
             console.log(err)
         }
     }
@@ -71,6 +77,8 @@ const Premium = () => {
                     ?
                     (
                         <div className='parentBuyPremiumContainer-darkMode'>
+                            <LoadingBar color={"red"} progress={progress}
+                                onLoaderFinished={() => setProgress(0)} />
                             <Header darkMode={darkMode} heading="Buy Premium"></Header>
                             <div className='buyPremiumContainer-darkMode'>
                                 <div className='buyPremiumCardContainer-darkMode'>
@@ -91,6 +99,8 @@ const Premium = () => {
                     :
                     (
                         <div className='parentBuyPremiumContainer'>
+                            <LoadingBar color={"red"} progress={progress}
+                                onLoaderFinished={() => setProgress(0)} />
                             <Header darkMode={darkMode} heading="Buy Premium"></Header >
                             <div className='buyPremiumContainer'>
                                 <div className='buyPremiumCardContainer'>
