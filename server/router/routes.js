@@ -70,7 +70,8 @@ router.post("/loginEmployee", async (req, res) => {
                 res.cookie("sessionToken", token, {
                     expires: new Date(Date.now() + 60000000000),
                     // httpOnly: true
-                    sameSite: "none"
+                    sameSite: "none",
+                    secure: true
                 })
                 return res.status(200).json({ "Message": "Login successful" });
             } else {
@@ -122,7 +123,8 @@ router.post("/loginEnterprise", async (req, res) => {
                 res.cookie("sessionToken", token, {
                     expires: new Date(Date.now() + 60000000000),
                     // httpOnly: true
-                    sameSite: "none"
+                    sameSite: "none",
+                    secure: true
                 })
                 return res.status(200).json({ "Message": "Login successful" });
             } else {
