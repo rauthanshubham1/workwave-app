@@ -12,9 +12,10 @@ const Login = () => {
   const [employeeLoginDetails, setEmployeeLoginDetails] = useState({ employeeEmailLogin: "", employeePasswordLogin: "" });
   const [enterpriseLoginDetails, setEnterpriseLoginDetails] = useState({ enterpriseEmailLogin: "", enterprisePasswordLogin: "" });
 
-  const checkAuthentication = async () => {
+  const checkAuthentication = async (sessionToken) => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_BACKEND}/verifyUser`, { withCredentials: true });
+      console.log(sessionToken);
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND}/verifyUser?sessionToken=${sessionToken}`, { withCredentials: true });
       if (response.status === 200) {
         localStorage.setItem("isEmployee", response.data.Message);
         navigate("/");
@@ -27,7 +28,7 @@ const Login = () => {
   useEffect(() => {
     const sessionToken = jscookie.get("sessionToken");
     if (sessionToken) {
-      checkAuthentication();
+      checkAuthentication(sessionToken);
     }
   }, [])
 
@@ -55,6 +56,7 @@ const Login = () => {
         const response = await axios.post(`${process.env.REACT_APP_BACKEND}/loginEmployee`, { email, password }, { withCredentials: true });
         if (response.status === 200) {
           localStorage.setItem("isEmployee", true);
+          jscookie.set('sessionToken', response.data.sessionToken, { expires: 7 });
           console.log("Login successful");
           navigate("/");
         }
@@ -73,6 +75,7 @@ const Login = () => {
         const response = await axios.post(`${process.env.REACT_APP_BACKEND}/loginEnterprise`, { email, password }, { withCredentials: true });
         if (response.status === 200) {
           localStorage.setItem("isEmployee", false);
+          jscookie.set('sessionToken', response.data.sessionToken, { expires: 7 });
           console.log("Login successful");
           navigate("/");
         }
@@ -84,7 +87,6 @@ const Login = () => {
       }
     }
   }
-
 
   return (
     <div className='loginContainer' >

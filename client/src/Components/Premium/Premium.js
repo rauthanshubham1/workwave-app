@@ -86,9 +86,8 @@ const Premium = () => {
                                     <div className='premiumBenefitsContainer-darkMode'>
                                         <ol>
                                             <li>Lifetime access</li>
-                                            <li>Increase team (upto 5 members)</li>
-                                            <li>Increase tasks (upto 8 tasks)</li>
                                             <li>Unlock more statistics</li>
+                                            <li>Assign more than 4 tasks</li>
                                         </ol>
                                     </div>
                                     <button className="button-20" onClick={handleProceedPayment} >Click here to proceed</button>
@@ -108,9 +107,8 @@ const Premium = () => {
                                     <div className='premiumBenefitsContainer'>
                                         <ol>
                                             <li>Lifetime access</li>
-                                            <li>Increase team (upto 5 members)</li>
-                                            <li>Increase tasks (upto 8 tasks)</li>
                                             <li>Unlock more statistics</li>
+                                            <li>Assign more than 4 tasks</li>
                                         </ol>
                                     </div>
                                     <button className="button-20" onClick={handleProceedPayment} >Click here to proceed</button>

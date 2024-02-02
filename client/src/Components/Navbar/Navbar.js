@@ -5,7 +5,7 @@ import WorkWave from "../../Assets/WorkWave.png"
 import DarkModeContext from '../../Contexts/DarkMode/DarkModeContext'
 import UserDataContext from '../../Contexts/UserData/UserDataContext'
 import axios from 'axios'
-
+import jscookie from "js-cookie"
 
 const Navbar = () => {
   const { darkMode, setDarkMode } = useContext(DarkModeContext);
@@ -22,7 +22,8 @@ const Navbar = () => {
   const handleDarkMode = async (mode) => {
     try {
       const isEmployee = localStorage.getItem("isEmployee");
-      const response = await axios.patch(`${process.env.REACT_APP_BACKEND}/changeDarkMode?isEmployee=${isEmployee}`, { mode }, { withCredentials: true });
+      const sessionToken = jscookie.get("sessionToken");
+      const response = await axios.patch(`${process.env.REACT_APP_BACKEND}/changeDarkMode?isEmployee=${isEmployee}&sessionToken=${sessionToken}`, { mode }, { withCredentials: true });
       if (response.status === 200) {
         setDarkMode(mode);
       }

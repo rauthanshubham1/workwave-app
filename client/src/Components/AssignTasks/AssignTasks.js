@@ -6,6 +6,7 @@ import UserDataContext from '../../Contexts/UserData/UserDataContext'
 import "./AssignTasks.css"
 import ListItem from './ListItem/ListItem'
 import LoadingBar from 'react-top-loading-bar'
+import jscookie from "js-cookie"
 
 const AssignTasks = () => {
     const [progress, setProgress] = useState(0);
@@ -40,6 +41,7 @@ const AssignTasks = () => {
 
     const handleAddTaskButton = async () => {
         setProgress(70);
+        const sessionToken = jscookie.get("sessionToken");
         try {
             if (inputTask === "" || selectedTeamMember.name === "") {
                 setProgress(100);
@@ -55,7 +57,7 @@ const AssignTasks = () => {
                     ];
                     setSelectedTeamMemberTasks(newArray);
                     // add to db
-                    const response = await axios.post(`${process.env.REACT_APP_BACKEND}/assignTask`, { taskDetails: newArray }, { withCredentials: true });
+                    const response = await axios.post(`${process.env.REACT_APP_BACKEND}/assignTask?sessionToken=${sessionToken}`, { taskDetails: newArray }, { withCredentials: true });
                     setProgress(100);
                     if (response.status === 200) {
                         alert("Task Assigned Successfully");
@@ -71,7 +73,7 @@ const AssignTasks = () => {
                     ]
                     setSelectedTeamMemberTasks(newArray);
                     setProgress(100);
-                    const response = await axios.post(`${process.env.REACT_APP_BACKEND}/assignTask`, { taskDetails: newArray }, { withCredentials: true });
+                    const response = await axios.post(`${process.env.REACT_APP_BACKEND}/assignTask?sessionToken=${sessionToken}`, { taskDetails: newArray }, { withCredentials: true });
                     if (response.status === 200) {
                         alert("Task Assigned");
                     }
@@ -86,6 +88,7 @@ const AssignTasks = () => {
 
     const deleteTask = async (index) => {
         setProgress(70);
+        const sessionToken = jscookie.get("sessionToken");
         try {
             seletedTeamMemberTasks[0].tasks.splice(index, 1)
             const modifiedArr = [
@@ -97,7 +100,7 @@ const AssignTasks = () => {
             ]
             setSelectedTeamMemberTasks(modifiedArr);
 
-            const response = await axios.post(`${process.env.REACT_APP_BACKEND}/deleteTask`, { taskDetails: modifiedArr }, { withCredentials: true });
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND}/deleteTask?sessionToken=${sessionToken}`, { taskDetails: modifiedArr }, { withCredentials: true });
             setProgress(100);
             if (response.status === 200) {
                 alert("Task Deleted Successfully");
@@ -111,12 +114,13 @@ const AssignTasks = () => {
 
     const handleShowAllTasks = async () => {
         setProgress(70);
+        const sessionToken = jscookie.get("sessionToken");
         try {
             if (selectedTeamMember.name === "" || selectedTeamMember.email === "" || selectDate === "") {
                 setProgress(100);
                 alert("Please select the required details of the person see tasks");
             } else {
-                const response = await axios.get(`${process.env.REACT_APP_BACKEND}/getTask?employeeEmail=${selectedTeamMember.email}&taskDate=${selectDate}`, { withCredentials: true });
+                const response = await axios.get(`${process.env.REACT_APP_BACKEND}/getTask?employeeEmail=${selectedTeamMember.email}&taskDate=${selectDate}&sessionToken=${sessionToken}`, { withCredentials: true });
                 setProgress(100);
                 const data = response.data.message;
                 if (data[0] === undefined) {
@@ -146,10 +150,12 @@ const AssignTasks = () => {
     const handleSearchUserButton = async () => {
         try {
             setProgress(70);
+            const sessionToken = jscookie.get("sessionToken");
             if (searchUser !== "") {
-                const response = await axios.post(`${process.env.REACT_APP_BACKEND}/addTeamMember`, { searchUser }, { withCredentials: true });
+                const response = await axios.post(`${process.env.REACT_APP_BACKEND}/addTeamMember?sessionToken=${sessionToken}`, { searchUser }, { withCredentials: true });
                 setProgress(100);
                 if (response.status === 200) {
+                    setAllTeamMembers(response.data.NewTeamMembers);
                     alert("Team Member successfully added");
                 } else {
                     alert("Error occurred");
@@ -323,7 +329,6 @@ const AssignTasks = () => {
                                                 )
                                                 :
                                                 "No task assigned"
-
                                         }
                                     </ol>
                                 </div>

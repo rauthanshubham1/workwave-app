@@ -11,10 +11,10 @@ const MainPage = () => {
     const { dispatch } = useContext(UserDataContext);
     const [dataLoaded, setDataLoaded] = useState(false);
 
-    const getUserData = async () => {
+    const getUserData = async (sessionToken) => {
         try {
             const isEmployee = localStorage.getItem("isEmployee");
-            const response = await axios.get(`${process.env.REACT_APP_BACKEND}/getUserData?isEmployee=${isEmployee}`, { withCredentials: true });
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND}/getUserData?isEmployee=${isEmployee}&sessionToken=${sessionToken}`, { withCredentials: true });
             if (response.status === 200) {
                 dispatch({ type: "LOGIN", payload: { userData: response.data, isAuthenticated: true } })
             }
@@ -31,7 +31,7 @@ const MainPage = () => {
     useEffect(() => {
         const sessionToken = jscookie.get("sessionToken");
         if (sessionToken) {
-            getUserData();
+            getUserData(sessionToken);
         } else {
             localStorage.removeItem("isEmployee");
             navigate("/login");

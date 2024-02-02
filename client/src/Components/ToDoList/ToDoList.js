@@ -6,6 +6,7 @@ import Task from './Task/Task'
 import DarkModeContext from '../../Contexts/DarkMode/DarkModeContext'
 import UserDataContext from '../../Contexts/UserData/UserDataContext'
 import LoadingBar from 'react-top-loading-bar'
+import jscookie from "js-cookie"
 
 const ToDoList = () => {
     const [progress, setProgress] = useState(0);
@@ -43,6 +44,7 @@ const ToDoList = () => {
 
     const handleTaskDone = async (index, done) => {
         try {
+            const sessionToken = jscookie.get("sessionToken");
             var newTaskArr = [];
             for (let i = 0; i < tasks.length; i++) {
                 if (i === index) {
@@ -56,7 +58,7 @@ const ToDoList = () => {
             dispatch({ type: "LOGIN", payload: { userData: state.userData, isAuthenticated: true } });
 
             const isEmployee = localStorage.getItem("isEmployee");
-            const response = await axios.patch(`${process.env.REACT_APP_BACKEND}/updateTodayTasks?isEmployee=${isEmployee}`, { todayDate: todayDate(), updatedTasksArr: newTaskArr }, { withCredentials: true });
+            const response = await axios.patch(`${process.env.REACT_APP_BACKEND}/updateTodayTasks?isEmployee=${isEmployee}&sessionToken=${sessionToken}`, { todayDate: todayDate(), updatedTasksArr: newTaskArr }, { withCredentials: true });
             if (response.status === 200) {
                 console.log("Task Updated");
             }

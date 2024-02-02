@@ -14,7 +14,8 @@ const crypto = require('crypto');
 // Verify user
 router.get("/verifyUser", async (req, res) => {
     try {
-        const { sessionToken } = req.cookies;
+        // const { sessionToken } = req.cookies;
+        const { sessionToken } = req.query;
         const verifyUser = jwt.verify(sessionToken, process.env.JWTSECRETKEY);
         const employee = await Employee.findOne({ _id: verifyUser._id, "tokens.token": sessionToken })
         if (employee) {
@@ -67,13 +68,13 @@ router.post("/loginEmployee", async (req, res) => {
             const checkPassword = await bcrypt.compare(password, employee.password);
             if (checkPassword) {
                 const token = await employee.generateToken();
-                res.cookie("sessionToken", token, {
-                    expires: new Date(Date.now() + 60000000000),
-                    // httpOnly: true
-                    sameSite: "none",
-                    secure: true
-                })
-                return res.status(200).json({ "Message": "Login successful" });
+                // res.cookie("sessionToken", token, {
+                //     expires: new Date(Date.now() + 86400000),
+                //     // httpOnly: true
+                //     sameSite: "none",
+                //     secure: true
+                // })
+                return res.status(200).json({ "Message": "Login successful", "sessionToken": token });
             } else {
                 return res.status(401).json({ "Error": "Invalid credentials" });
             }
@@ -120,13 +121,13 @@ router.post("/loginEnterprise", async (req, res) => {
             const checkPassword = await bcrypt.compare(password, enterprise.password)
             if (checkPassword) {
                 const token = await enterprise.generateToken();
-                res.cookie("sessionToken", token, {
-                    expires: new Date(Date.now() + 60000000000),
-                    // httpOnly: true
-                    sameSite: "none",
-                    secure: true
-                })
-                return res.status(200).json({ "Message": "Login successful" });
+                // res.cookie("sessionToken", token, {
+                //     expires: new Date(Date.now() + 86400000),
+                //     // httpOnly: true
+                //     sameSite: "none",
+                //     secure: true
+                // })
+                return res.status(200).json({ "Message": "Login successful", "sessionToken": token });
             } else {
                 return res.status(401).json({ "Error": "Invalid credentials" });
             }
@@ -165,7 +166,6 @@ router.post("/addTeamMember", authentication, async (req, res) => {
         const employee = await Employee.findOne({ email: searchUser });
         if (enterprise && employee) {
             await enterprise.addTeamMember({ name: employee.name, email: employee.email, phone: employee.phone });
-            console.log(enterprise.teams);
             for (let i = 0; i < enterprise.teams.length; i++) {
                 let email = enterprise.teams[i].email;
                 const employee = await Employee.findOne({ email });
@@ -174,7 +174,7 @@ router.post("/addTeamMember", authentication, async (req, res) => {
             if (enterprise.isPremium === true) {
                 await employee.purchasedPremium();
             }
-            res.status(200).json({ "Message": "Team Member Added" });
+            res.status(200).json({ "Message": "Team Member Added", "NewTeamMembers": enterprise.teams });
         } else {
             res.status(400).json({ "Error": "Error Occurred" });
         }
@@ -195,7 +195,6 @@ router.patch("/changeDarkMode", authentication, async (req, res) => {
     } else {
         const id = req.userId.toString();
         const enterprise = await Enterprise.findOne({ _id: id });
-        console.log(enterprise);
         enterprise.setDarkMode(mode);
         return res.status(200).json({ "Message": "Changed Mode" });
     }
@@ -317,7 +316,7 @@ router.post('/completeOrder/:email', async (req, res) => {
 
 // Logout user
 router.get("/logout", (req, res) => {
-    res.clearCookie("sessionToken", { path: "/" });
+    // res.clearCookie("sessionToken", { path: "/" });
     res.status(200).json({ "Message": "Successfully logged out" });
 })
 

@@ -3,6 +3,7 @@ import axios from "axios"
 import UserDataContext from "../../Contexts/UserData/UserDataContext"
 import { useNavigate } from 'react-router-dom';
 import LoadingBar from 'react-top-loading-bar'
+import jscookie from "js-cookie"
 
 const Logout = () => {
     const navigate = useNavigate()
@@ -15,6 +16,7 @@ const Logout = () => {
             if (response.status === 200) {
                 dispatch({ type: "LOGOUT" })
                 localStorage.removeItem("isEmployee");
+                jscookie.remove('sessionToken');
                 navigate("/login");
                 console.log("Successfully logged out");
             }
