@@ -106,8 +106,8 @@ const Calendar = () => {
                                         tasksOnDate[0] === undefined ?
                                             "No task assigned"
                                             :
-                                            tasksOnDate.map((task, index) => {
-                                                return <Events key={index} event={task} />
+                                            tasksOnDate.map((taskObj, index) => {
+                                                return <Events key={index} event={taskObj.task} />
                                             })
                                     }
                                 </ol>

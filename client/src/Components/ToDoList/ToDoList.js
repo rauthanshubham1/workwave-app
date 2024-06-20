@@ -120,7 +120,7 @@ const ToDoList = () => {
                                     <h4 style={{ marginLeft: "30px", textDecoration: "none" }}>No task assigned</h4>
                                     :
                                     tasks.map((taskObj, index) => {
-                                        return <Task key={index} taskId={index} task={taskObj.task} done={taskObj.done} darkMode="" isPremium={isPremium} />
+                                        return <Task handleTaskDone={handleTaskDone} key={index} taskId={index} task={taskObj.task} done={taskObj.done} darkMode="" isPremium={isPremium} />
                                     })
                             }
 

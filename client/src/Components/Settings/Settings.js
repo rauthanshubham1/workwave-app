@@ -45,7 +45,6 @@ const Settings = () => {
                             <img src={state.userData.profilePic} alt="" />
                         </div>
                         <button className="button-1" onClick={handleProfilePic}>Change Profile Picture</button>
-                        <button className="button-2323" onClick={handleDeleteAccount}>Delete Account</button>
                     </div>
                 </div >
             )
@@ -60,7 +59,6 @@ const Settings = () => {
                             <img src={state.userData.profilePic} alt="" />
                         </div>
                         <button className="button-1" onClick={handleProfilePic}>Change Profile Picture</button>
-                        <button className="button-2323" onClick={handleDeleteAccount}>Delete Account</button>
                     </div>
                 </div >
             )
