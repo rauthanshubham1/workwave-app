@@ -49,20 +49,20 @@ const Navbar = () => {
           </div>
 
           <ul className='navbar-list-1'>
-            <Link to="/"><li><i className="fa-solid fa-house-chimney"></i>&nbsp; Dashboard</li></Link>
-            <Link to="/yourprofile"><li><i className="fa-solid fa-user"></i>&nbsp; Your Profile</li></Link>
+            <Link to="/" className='link-css'><li><i className="fa-solid fa-house-chimney"></i>&nbsp; Dashboard</li></Link>
+            <Link to="/yourprofile" className='link-css'><li><i className="fa-solid fa-user"></i>&nbsp; Your Profile</li></Link>
             {
               isEmployee === "false"
                 ?
                 (
-                  <Link to="/assigntasks"><li><i className="fa-solid fa-list"></i>&nbsp; Assign Tasks</li></Link>
+                  <Link to="/assigntasks" className='link-css'><li><i className="fa-solid fa-list"></i>&nbsp; Assign Tasks</li></Link>
                 )
                 :
                 (
-                  <Link to="/todolist"><li><i className="fa-solid fa-list"></i>&nbsp; ToDo List</li></Link>
+                  <Link to="/todolist" className='link-css'><li><i className="fa-solid fa-list"></i>&nbsp; ToDo List</li></Link>
                 )
             }
-            <Link to="/team"><li><i className="fa-solid fa-people-group"></i>&nbsp; Team</li></Link>
+            <Link to="/team" className='link-css'><li><i className="fa-solid fa-people-group"></i>&nbsp; Team</li></Link>
             {
               isEmployee === "false"
                 ?
@@ -72,12 +72,12 @@ const Navbar = () => {
                     ("")
                     :
                     (
-                      <Link to="/premium"><li><i className="fa-solid fa-hand-holding-dollar"></i>&nbsp; Buy Premium</li></Link >
+                      <Link to="/premium" className='link-css'><li><i className="fa-solid fa-hand-holding-dollar"></i>&nbsp; Buy Premium</li></Link >
                     )
                 )
                 :
                 (
-                  <Link to="/calendar"><li><i className="fa-regular fa-calendar-days"></i>&nbsp; Calendar</li></Link>
+                  <Link to="/calendar" className='link-css'><li><i className="fa-regular fa-calendar-days"></i>&nbsp; Calendar</li></Link>
                 )
             }
           </ul >
@@ -92,8 +92,8 @@ const Navbar = () => {
           </div>
 
           <ul className='navbar-list-2'>
-            <Link to="/settings"><li><i className="fa-solid fa-gears"></i>&nbsp; Settings</li></Link>
-            <Link to="/logout"><li><i className="fa-solid fa-right-from-bracket"></i>&nbsp; Log Out</li></Link>
+            <Link to="/settings" className='link-css'><li><i className="fa-solid fa-gears"></i>&nbsp; Settings</li></Link>
+            <Link to="/logout" className='link-css'><li><i className="fa-solid fa-right-from-bracket"></i>&nbsp; Log Out</li></Link>
           </ul>
 
           <div className='proOrNot-darkMode'>
@@ -127,20 +127,20 @@ const Navbar = () => {
           </div>
 
           <ul className='navbar-list-1'>
-            <Link to="/"><li><i className="fa-solid fa-house-chimney"></i>&nbsp; Dashboard</li></Link>
-            <Link to="/yourprofile"><li><i className="fa-solid fa-user"></i>&nbsp; Your Profile</li></Link>
+            <Link to="/" className='link-css'><li><i className="fa-solid fa-house-chimney"></i>&nbsp; Dashboard</li></Link>
+            <Link to="/yourprofile" className='link-css'><li><i className="fa-solid fa-user"></i>&nbsp; Your Profile</li></Link>
             {
               isEmployee === "false"
                 ?
                 (
-                  <Link to="/assigntasks"><li><i className="fa-solid fa-list"></i>&nbsp; Assign Tasks</li></Link>
+                  <Link to="/assigntasks" className='link-css'><li><i className="fa-solid fa-list"></i>&nbsp; Assign Tasks</li></Link>
                 )
                 :
                 (
-                  <Link to="/todolist"><li><i className="fa-solid fa-list"></i>&nbsp; ToDo List</li></Link>
+                  <Link to="/todolist" className='link-css'><li><i className="fa-solid fa-list"></i>&nbsp; ToDo List</li></Link>
                 )
             }
-            <Link to="/team"><li><i className="fa-solid fa-people-group"></i>&nbsp; Team</li></Link>
+            <Link to="/team" className='link-css'><li><i className="fa-solid fa-people-group"></i>&nbsp; Team</li></Link>
             {
               isEmployee === "false"
                 ?
@@ -150,12 +150,12 @@ const Navbar = () => {
                     ("")
                     :
                     (
-                      <Link to="/premium"><li><i className="fa-solid fa-hand-holding-dollar"></i>&nbsp; Buy Premium</li></Link >
+                      <Link to="/premium" className='link-css'><li><i className="fa-solid fa-hand-holding-dollar"></i>&nbsp; Buy Premium</li></Link >
                     )
                 )
                 :
                 (
-                  <Link to="/calendar"><li><i className="fa-regular fa-calendar-days"></i>&nbsp; Calendar</li></Link>
+                  <Link to="/calendar" className='link-css'><li><i className="fa-regular fa-calendar-days"></i>&nbsp; Calendar</li></Link>
                 )
             }
           </ul>
@@ -171,8 +171,8 @@ const Navbar = () => {
           </div>
 
           <ul className='navbar-list-2'>
-            <Link to="/settings"><li><i className="fa-solid fa-gears"></i>&nbsp; Settings</li></Link>
-            <Link to="/logout"><li><i className="fa-solid fa-right-from-bracket"></i>&nbsp; Log Out</li></Link>
+            <Link to="/settings" className='link-css'><li><i className="fa-solid fa-gears"></i>&nbsp; Settings</li></Link>
+            <Link to="/logout" className='link-css'><li><i className="fa-solid fa-right-from-bracket"></i>&nbsp; Log Out</li></Link>
           </ul>
 
           <div className='proOrNot'>

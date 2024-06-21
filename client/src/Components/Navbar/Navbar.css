@@ -27,6 +27,10 @@
   list-style: none;
 }
 
+.link-css {
+  text-decoration: none;
+}
+
 .navbar li {
   display: flex;
   align-items: center;
